@@ -372,9 +372,19 @@ function App({ width, height }) {
 	}
 
 	var reversedLooksContrast = [];
-    for (var indexReversedLooksContrast = 0; indexReversedLooksContrast < 101; indexReversedLooksContrast++) {
-        reversedLooksContrast.push(indexReversedLooksContrast);
-    }
+	for (var indexReversedLooksContrast = 0; indexReversedLooksContrast < 101; indexReversedLooksContrast++) {
+		reversedLooksContrast.push(indexReversedLooksContrast);
+	}
+
+	var reversedToolTipLooksContrast = [];
+	for (var indexReversedToolTipLooksContrast = 0; indexReversedToolTipLooksContrast < 101; indexReversedToolTipLooksContrast++) {
+		reversedToolTipLooksContrast.push(indexReversedToolTipLooksContrast);
+	}
+
+	var reversedToolTipPaintContrast = [];
+	for (var indexReversedToolTipPaintContrast = 0; indexReversedToolTipPaintContrast < 101; indexReversedToolTipPaintContrast++) {
+		reversedToolTipPaintContrast.push(indexReversedToolTipPaintContrast);
+	}
 
 	var reversedPaintContrast = [];
 	for (var indexReversedPaintContrast = 0; indexReversedPaintContrast < 101; indexReversedPaintContrast++) {
@@ -450,7 +460,7 @@ function App({ width, height }) {
 													<div key={i} className={`icons color-contrast-${i+1} ` + (colorContrastIndex === i ? 'active' : '')} onClick={()=> setColorContrast(i)}></div>
 												)}
 												<div className="slider-container-small">
-													<div className={"slider-tooltip " + (!message ? 'none' : '')}
+														<div className={"slider-tooltip " + (!message ? 'none' : '')}
 														style={contrastValue[0] < 50 ? {'top':`calc(${contrastValue[0]}% - 50px)`} : {'top':`calc(${contrastValue[1]}% - 50px)`}}>
 															<div className={(contrastValue[0] <= 49 ? '' : 'none')}>{contrastValue[0]}%</div>
 															<div className={contrastValue[0] >= 50 ? '' : 'none'}>{contrastValue[1]}%</div>
@@ -506,7 +516,13 @@ function App({ width, height }) {
 
 											<div className={"col-left " + (looksNav !== 1 ? 'none' : '')}>
 												<div className="slider-container-large">
-													<RangeSlider tooltip={false} vertical progress value={[looksContrastValue[0], looksContrastValue[1]]} onChange={value => {setLooksContrast(value)}}/>
+													<div className={"slider-tooltip " + (!message ? 'none' : '')}
+														style={{'top':`calc(${looksContrastValue[0]}% - 50px)`}}>
+															{reversedToolTipLooksContrast.reverse().map((val, i)=>(
+																<div className={(looksContrastValue[0] === i ? '':'none')}>{val}</div>
+															))}
+													</div>
+													<RangeSlider onMouseDown={handleEvent} onMouseUp={handleEvent} tooltip={false} vertical progress value={[looksContrastValue[0], looksContrastValue[1]]} onChange={value => {setLooksContrast(value)}}/>
 												</div>
 												<div className="tooltip"></div>
 											</div>
@@ -606,7 +622,13 @@ function App({ width, height }) {
 
 											<div className={"col-left " + (paintNav !== 2 ? 'none' : '')}>
 												<div className="slider-container-large">
-													<RangeSlider tooltip={false} vertical progress value={[paintContrastValue[0], paintContrastValue[1]]} onChange={value => {setPaintContrast(value)}}/>
+													<div className={"slider-tooltip " + (!message ? 'none' : '')}
+														style={{'top':`calc(${paintContrastValue[0]}% - 50px)`}}>
+														{reversedToolTipPaintContrast.reverse().map((val, i)=>(
+															<div className={(paintContrastValue[0] === i ? '':'none')}>{val}</div>
+														))}
+													</div>
+													<RangeSlider onMouseDown={handleEvent} onMouseUp={handleEvent} tooltip={false} vertical progress value={[paintContrastValue[0], paintContrastValue[1]]} onChange={value => {setPaintContrast(value)}}/>
 												</div>
 											</div>
 
