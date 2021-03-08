@@ -362,33 +362,33 @@ function App({ width, height }) {
 		canvas.off('mouse:down');
 	}
 
-	const [ message, setMessage ] = useState(false);
+	const [ mouseEvent, setmouseEvent ] = useState(false);
 	const handleEvent = (event) => {
 		switch (event.type) {
-			case "mousedown": setMessage(true); break;
-			case "mouseup": setMessage(false); break;
+			case "mousedown": setmouseEvent(true); break;
+			case "mouseup": setmouseEvent(false); break;
 			default: break;
 		}
 	}
 
-	var reversedLooksContrast = [];
-	for (var indexReversedLooksContrast = 0; indexReversedLooksContrast < 101; indexReversedLooksContrast++) {
-		reversedLooksContrast.push(indexReversedLooksContrast);
+	var sliderLooksRev = [];
+	for (var indexSliderLooks = 0; indexSliderLooks < 101; indexSliderLooks++) {
+		sliderLooksRev.push(indexSliderLooks);
 	}
 
-	var reversedToolTipLooksContrast = [];
-	for (var indexReversedToolTipLooksContrast = 0; indexReversedToolTipLooksContrast < 101; indexReversedToolTipLooksContrast++) {
-		reversedToolTipLooksContrast.push(indexReversedToolTipLooksContrast);
+	var toolTipLooks = [];
+	for (var indexToolTipLooks = 0; indexToolTipLooks < 101; indexToolTipLooks++) {
+		toolTipLooks.push(indexToolTipLooks);
 	}
 
-	var reversedToolTipPaintContrast = [];
-	for (var indexReversedToolTipPaintContrast = 0; indexReversedToolTipPaintContrast < 101; indexReversedToolTipPaintContrast++) {
-		reversedToolTipPaintContrast.push(indexReversedToolTipPaintContrast);
+	var sliderPaintContrast = [];
+	for (var indexSliderPaintContrast = 0; indexSliderPaintContrast < 101; indexSliderPaintContrast++) {
+		sliderPaintContrast.push(indexSliderPaintContrast);
 	}
 
-	var reversedPaintContrast = [];
-	for (var indexReversedPaintContrast = 0; indexReversedPaintContrast < 101; indexReversedPaintContrast++) {
-		reversedPaintContrast.push(indexReversedPaintContrast);
+	var toolTipPaintContrast = [];
+	for (var indexToolTipPaintContrast = 0; indexToolTipPaintContrast < 101; indexToolTipPaintContrast++) {
+		toolTipPaintContrast.push(indexToolTipPaintContrast);
 	}
 
 	return (
@@ -460,7 +460,7 @@ function App({ width, height }) {
 													<div key={i} className={`icons color-contrast-${i+1} ` + (colorContrastIndex === i ? 'active' : '')} onClick={()=> setColorContrast(i)}></div>
 												)}
 												<div className="slider-container-small">
-														<div className={"slider-tooltip " + (!message ? 'none' : '')}
+														<div className={"slider-tooltip " + (!mouseEvent ? 'none' : '')}
 														style={contrastValue[0] < 50 ? {'top':`calc(${contrastValue[0]}% - 50px)`} : {'top':`calc(${contrastValue[1]}% - 50px)`}}>
 															<div className={(contrastValue[0] <= 49 ? '' : 'none')}>{contrastValue[0]}%</div>
 															<div className={contrastValue[0] >= 50 ? '' : 'none'}>{contrastValue[1]}%</div>
@@ -474,7 +474,7 @@ function App({ width, height }) {
 													<div key={i} className={`icons color-lights-${i+1} ` + (colorLightsIndex === i ? 'active' : '')} onClick={()=> setColorLights(i)}></div>
 												)}
 												<div className="slider-container-small">
-													<div className={"slider-tooltip " + (!message ? 'none' : '')}
+													<div className={"slider-tooltip " + (!mouseEvent ? 'none' : '')}
 														style={highlightValue[0] < 50 ? {'top':`calc(${highlightValue[0]}% - 50px)`} : {'top':`calc(${highlightValue[1]}% - 50px)`}}>
 														<div className={(highlightValue[0] <= 49 ? '' : 'none')}>{highlightValue[0]}%</div>
 														<div className={highlightValue[0] >= 50 ? '' : 'none'}>{highlightValue[1]}%</div>
@@ -485,7 +485,7 @@ function App({ width, height }) {
 
 											<div className={"col-left " + (colorNav !== 3 ? 'none' : '')}>
 												<div className="slider-container-large">
-													<div className={"slider-tooltip " + (!message ? 'none' : '')}
+													<div className={"slider-tooltip " + (!mouseEvent ? 'none' : '')}
 														style={saturationValue[0] < 50 ? {'top':`calc(${saturationValue[0]}% - 50px)`} : {'top':`calc(${saturationValue[1]}% - 50px)`}}>
 														<div className={(saturationValue[0] <= 49 ? '' : 'none')}>{saturationValue[0]}%</div>
 														<div className={saturationValue[0] >= 50 ? '' : 'none'}>{saturationValue[1]}%</div>
@@ -516,9 +516,9 @@ function App({ width, height }) {
 
 											<div className={"col-left " + (looksNav !== 1 ? 'none' : '')}>
 												<div className="slider-container-large">
-													<div className={"slider-tooltip " + (!message ? 'none' : '')}
+													<div className={"slider-tooltip " + (!mouseEvent ? 'none' : '')}
 														style={{'top':`calc(${looksContrastValue[0]}% - 50px)`}}>
-															{reversedToolTipLooksContrast.reverse().map((val, i)=>(
+															{toolTipLooks.reverse().map((val, i)=>(
 																<div className={(looksContrastValue[0] === i ? '':'none')}>{val}</div>
 															))}
 													</div>
@@ -534,7 +534,7 @@ function App({ width, height }) {
 												onClick={()=> setLooksNav(0)}></div>
 
 											<div className={"looks-nav-intensity " +  (looksNav === 1 ? ' active' : '')} onClick={()=> setLooksNav(1)}>
-												{reversedLooksContrast.reverse().map((val, i)=>(
+												{sliderLooksRev.reverse().map((val, i)=>(
 													<span className={(looksContrastValue[0] === i ? '':'none')}>{val}</span>
 												))}
 											</div>
@@ -622,9 +622,9 @@ function App({ width, height }) {
 
 											<div className={"col-left " + (paintNav !== 2 ? 'none' : '')}>
 												<div className="slider-container-large">
-													<div className={"slider-tooltip " + (!message ? 'none' : '')}
+													<div className={"slider-tooltip " + (!mouseEvent ? 'none' : '')}
 														style={{'top':`calc(${paintContrastValue[0]}% - 50px)`}}>
-														{reversedToolTipPaintContrast.reverse().map((val, i)=>(
+														{toolTipPaintContrast.reverse().map((val, i)=>(
 															<div className={(paintContrastValue[0] === i ? '':'none')}>{val}</div>
 														))}
 													</div>
@@ -655,7 +655,7 @@ function App({ width, height }) {
 											+ (paintSize === 4 ? 'active-stroke-size-4' : '')} onClick={()=> setPaintNav(1)}></div>
 
 											<div className={"paint-nav-contrast "+ (paintNav === 2 ? 'active ' : '')} onClick={()=> setPaintNav(2)}>
-												{reversedPaintContrast.reverse().map((val, i)=>(
+												{sliderPaintContrast.reverse().map((val, i)=>(
 													<span className={(paintContrastValue[0] === i ? '':'none')}>{val}</span>
 												))}
 											</div>
@@ -713,7 +713,6 @@ function App({ width, height }) {
 						<span className="horizontal"></span>
 						<span className="vertical"></span>
 					</button>
-					<button onMouseDown={handleEvent} onMouseUp={handleEvent} >{message}</button>
 				</PageZoomControl>
 			</div>
 		</div>

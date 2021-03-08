@@ -68,6 +68,7 @@
 .rs-slider-bar {
 	height: 100%;
 	width: 13px;
+	pointer-events: none;
 }
 
 .rs-slider-graduator {
