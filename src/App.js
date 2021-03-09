@@ -574,7 +574,7 @@ function App({ width, height }) {
 										</div>
 
 										<div className="col-right">
-											<div className={"emoji-nav-emoji active-emoji-0" + (emojiNav === 0 ? ' active' : '')} onClick={()=> {setEmojiNav(0); setEmoji(10)}}></div>
+											<div className={`emoji-nav-emoji active-emoji-${emojiIndex}` + (emojiNav === 0 ? ' active' : '')} onClick={()=> {setEmojiNav(0); setEmoji(10)}}></div>
 
 											<div className={"emoji-nav-resize "
 											+ (emojiNav === 1 ? ' active' : '')} onClick={()=> {setEmojiNav(1)}}>
