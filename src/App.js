@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { fabric } from 'fabric';
 import { Slider, RangeSlider } from 'rsuite';
 
@@ -32,6 +32,25 @@ import wheelAll 	from './images/effects-color/wheel-all.png';
 App.defaultProps = {
     width: 1920,
     height: 1200,
+}
+
+function useInterval(callback, delay) {
+	const savedCallback = useRef();
+
+	useEffect(() => {
+		savedCallback.current = callback;
+	}, [callback]);
+
+	useEffect(() => {
+		function tick() {
+			savedCallback.current();
+		}
+
+		if (delay !== null) {
+			let id = setInterval(tick, delay);
+			return () => clearInterval(id);
+		}
+	}, [delay]);
 }
 
 function App({ width, height }) {
@@ -70,6 +89,22 @@ function App({ width, height }) {
 		});
 		return newCanvas;
 	};
+
+	const [count, setCount] = useState('');
+	const [isRunning, setIsRunning] = useState(false);
+
+	useInterval(() => {
+		setCount(count-1);
+		console.log(count-1);
+		if(count < 1) {
+			setCount(0);
+			setIsRunning(false)
+		}
+	}, isRunning ? 1000 : null);
+
+	function toggleTimer() {
+		setIsRunning(!isRunning);
+	}
 
 	useEffect(()=> {
 		setCanvas(initCanvas());
@@ -312,10 +347,22 @@ function App({ width, height }) {
 
 		canvas.on('mouse:up', (object) => {
 			switch (emojiTimer) {
-				case 1: setTimeout(() => { deleteSelected() }, 1000); break;
-				case 2: setTimeout(() => { deleteSelected() }, 3000); break;
-				case 3: setTimeout(() => { deleteSelected() }, 5000); break;
-				case 4: setTimeout(() => { deleteSelected() }, 10000); break;
+				case 1:
+					setCount(1); toggleTimer();
+					setTimeout(() => { deleteSelected() }, 1000);
+				break;
+				case 2:
+					setCount(3); toggleTimer();
+					setTimeout(() => { deleteSelected() }, 3000);
+				break;
+				case 3:
+					setCount(5); toggleTimer();
+					setTimeout(() => { deleteSelected() }, 5000);
+				break;
+				case 4:
+					setCount(10); toggleTimer();
+					setTimeout(() => { deleteSelected() }, 10000);
+				break;
 				default: break;
 			}
 		});
@@ -574,7 +621,7 @@ function App({ width, height }) {
 										</div>
 
 										<div className="col-right">
-											<div className={`emoji-nav-emoji active-emoji-${emojiIndex}` + (emojiNav === 0 ? ' active' : '')} onClick={()=> {setEmojiNav(0); setEmoji(10)}}></div>
+											<div className={`emoji-nav-emoji active-emoji-${emojiIndex}` + (emojiNav === 0 ? ' active' : '')} onClick={()=> {setEmojiNav(0)}}></div>
 
 											<div className={"emoji-nav-resize "
 											+ (emojiNav === 1 ? ' active' : '')} onClick={()=> {setEmojiNav(1)}}>
@@ -589,10 +636,10 @@ function App({ width, height }) {
 											+ (emojiNav === 2 ? ' active' : '')
 											+ (emojiTimer === 0 ? ' active-timer-0' : '')
 											+ (emojiTimer >= 1 ? ' active-timer-1' : '')} onClick={()=> setEmojiNav(2)}>
-												<span className={emojiTimer !== 1 ? 'none' : ''}>1s</span>
-												<span className={emojiTimer !== 2 ? 'none' : ''}>3s</span>
-												<span className={emojiTimer !== 3 ? 'none' : ''}>5s</span>
-												<span className={emojiTimer !== 4 ? 'none' : ''}>10s</span>
+												<span className={emojiTimer !== 1 ? 'none' : ''}>{!isRunning ? '1s' : `${count}s`}</span>
+												<span className={emojiTimer !== 2 ? 'none' : ''}>{!isRunning ? '3s' : `${count}s`}</span>
+												<span className={emojiTimer !== 3 ? 'none' : ''}>{!isRunning ? '5s' : `${count}s`}</span>
+												<span className={emojiTimer !== 4 ? 'none' : ''}>{!isRunning ? '10s' : `${count}s`}</span>
 											</div>
 
 											<div className="disabled-item"></div>
